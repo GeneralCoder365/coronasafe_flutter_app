@@ -39,8 +39,8 @@ dependencies:
   implicitly_animated_reorderable_list: ^0.4.2
   fl_chart: ^0.40.2
   webview_flutter: ^3.0.0
-  google_fonts: ^2.1.1
-  showcaseview: ^1.1.4
+  bottom_picker: ^1.4.0
+  animate_do: ^2.1.0
 
   
   
