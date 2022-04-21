@@ -47,7 +47,7 @@ class OnboardingScreen extends StatelessWidget {
               padding: const EdgeInsets.only(
                   bottom: 5, top: 20, left: 10, right: 50),
               width: double.infinity,
-              child: const Text('We Get It',
+              child: const Text('That\'s why we made CoronaSafe',
                   style: TextStyle(
                     fontFamily: 'CenturyGothic',
                     fontSize: 25,
@@ -57,7 +57,7 @@ class OnboardingScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 20, left: 10, right: 50),
             width: double.infinity,
             child: const Text(
-              'That\'s why we made CoronaSafe, an app that calculates your risk of having contracted Covid-19',
+              'We wanted to create an application that informed people about their chances of contracting COVID-19.',
               style: TextStyle(
                 fontSize: 15,
                 color: Color(0xFFadd8eb),

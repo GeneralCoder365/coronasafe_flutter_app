@@ -5,21 +5,31 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class USMapScreen extends StatefulWidget {
-  const USMapScreen({Key? key}) : super(key: key);
+// #TODO: some states aren't fully popping up (lost counties)
+class StateGraphScreen extends StatefulWidget {
+  final String? inputState;
+
+  const StateGraphScreen({Key? key, this.inputState}) : super(key: key);
 
   @override
-  State<USMapScreen> createState() => _USMapScreenState();
+  State<StateGraphScreen> createState() =>
+      _StateGraphScreenState(inputState: inputState);
 }
 
-class _USMapScreenState extends State<USMapScreen> {
+class _StateGraphScreenState extends State<StateGraphScreen> {
   late WebViewController _controller;
-  late String _urlQueryString;
 
-  Future<String> getData() async {
+  String? inputState;
+  // ignore: unused_element
+  _StateGraphScreenState({Key? key, required this.inputState});
+  Future<String> getData(String? query) async {
+    query = query?.toLowerCase();
+    print(query);
     Dio _dio = Dio();
-    var data2 = await _dio
-        .get('http://coronasafe-flask-app.herokuapp.com/getUSCaseMap');
+    var queryParameters = {'state': query};
+    var data2 = await _dio.get(
+        'http://coronasafe-flask-app.herokuapp.com/getUSStateCaseMap',
+        queryParameters: queryParameters);
 
     var initialGraphString = data2.data.toString();
 
@@ -31,21 +41,12 @@ class _USMapScreenState extends State<USMapScreen> {
     var finalGraphUrlString = takeBackAway[0];
 
     var takeAwaySpace = finalGraphUrlString.split(" ");
-    print(takeAwaySpace[1]);
     return takeAwaySpace[1];
   }
 
   @override
-  void initState() {
-    getData();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    setState(() {
-      getData();
-    });
+    getData(inputState);
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SafeArea(
@@ -89,9 +90,8 @@ class _USMapScreenState extends State<USMapScreen> {
                   gestureNavigationEnabled: true,
                   onWebViewCreated:
                       (WebViewController webViewController) async {
-                    String _urlQueryString = await getData();
                     _controller = webViewController;
-
+                    String _urlQueryString = await getData(this.inputState);
                     _controller.loadUrl(_urlQueryString);
                   },
                   gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>{

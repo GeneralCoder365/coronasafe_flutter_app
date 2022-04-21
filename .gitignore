@@ -3,3 +3,4 @@ frontend/.dart_tool/
 frontend/build/
 coronasafe_v2/g_api_key.env
 frontend/assets/
+.idea/
